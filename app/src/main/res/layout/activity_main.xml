@@ -11,7 +11,8 @@
         android:layout_width="168dp"
         android:layout_height="122dp"
         android:text="@string/button_yes"
-        android:id="@+id/button_id" />
+        android:id="@+id/button_id"
+        android:onClick="playYes"/>
 
     <Button
         android:layout_width="168dp"
