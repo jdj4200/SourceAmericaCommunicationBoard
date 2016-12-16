@@ -18,5 +18,6 @@
         android:layout_width="168dp"
         android:layout_height="122dp"
         android:text="@string/button_no"
-        android:id="@+id/button2" />
+        android:id="@+id/button2"
+        android:onClick="playNo" />
 </LinearLayout>

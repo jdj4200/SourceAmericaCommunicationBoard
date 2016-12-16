@@ -1,5 +1,6 @@
 package com.example.phsworkinnovations.communicationboard;
 
+import android.annotation.TargetApi;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +14,8 @@ import static java.util.Locale.*;
 public class MainActivity extends AppCompatActivity {
     private TextToSpeech speech;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @TargetApi((21))
+        protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         speech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -25,7 +27,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    @TargetApi((21))
     public void playYes(View view){
         speech.speak("Yes",TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
+    @TargetApi((21))
+    public void playNo(View view){
+        speech.speak("No",TextToSpeech.QUEUE_FLUSH, null, null);
     }
 }
