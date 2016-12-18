@@ -1,23 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#002060"
     android:orientation="horizontal"
     android:weightSum="1">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:id="@+id/yesNo"
+        android:weightSum="1">
+
+        <Button
+            android:layout_width="175dp"
+            android:layout_height="150dp"
+            android:layout_margin="10dp"
+            android:text="@string/button_yes"
+            android:tag="@string/button_yes"
+            android:textSize="80sp"
+            android:id="@+id/yes"
+            android:background="#00FF00"
+            android:onClick="playSpeech"/>
+
+        <Button
+        android:layout_width="175dp"
+        android:layout_height="150dp"
+        android:layout_margin="10dp"
+        android:text="@string/button_no"
+        android:tag="@string/button_no"
+        android:textSize="80sp"
+        android:textColor="#FFFFFF"
+        android:id="@+id/no"
+        android:background="#FF0000"
+        android:layout_toRightOf="@id/yes"
+        android:onClick="playSpeech" />
+    </LinearLayout>
     <Button
-        android:layout_width="168dp"
-        android:layout_height="122dp"
-        android:text="@string/button_yes"
-        android:id="@+id/button_id"
-        android:onClick="playYes"/>
+        android:layout_width="wrap_content"
+        android:layout_alignLeft="@id/yesNo"
+        android:layout_alignRight="@id/yesNo"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/yesNo"
+        android:background="#FFFF00"
+        android:layout_centerHorizontal="true"
+        android:text="@string/comExp"
+        android:textSize="40sp"
+        android:onClick="switchToCommonExpressions"
+        android:id="@+id/comExp"/>
 
     <Button
-        android:layout_width="168dp"
-        android:layout_height="122dp"
-        android:text="@string/button_no"
-        android:id="@+id/button2"
-        android:onClick="playNo" />
-</LinearLayout>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#00B0D0"
+        android:text="@string/topics"
+        android:textSize="60sp"
+        android:layout_below="@+id/comExp"
+        android:layout_alignLeft="@id/comExp"
+        android:layout_alignRight="@id/comExp"
+        android:id="@+id/button"
+        android:onClick="switchToTopics"/>
+</RelativeLayout>
