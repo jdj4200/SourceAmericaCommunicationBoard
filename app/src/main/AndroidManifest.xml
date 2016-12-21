@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CommonExpressionsActivity" />
-        <activity android:name=".TopicsActivity"></activity>
+        <activity android:name=".TopicsActivity" />
+        <activity android:name=".SpecificTopicActivity"></activity>
     </application>
 
 </manifest>

@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_topics"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00B0D0"
-    tools:context="com.example.phsworkinnovations.communicationboard.TopicsActivity">
+    tools:context="com.example.phsworkinnovations.communicationboard.TopicsActivity"
+    android:fillViewport="true"
+    android:scrollbars="none" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/topics"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
         android:textSize="45sp"
         android:textColor="#000000"
         android:textStyle="bold"
@@ -19,13 +26,35 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/title"
+        android:layout_margin="10sp"
+        android:layout_gravity="center_horizontal"
         android:text="@string/work"
         android:tag="@string/work"
         android:textSize="45sp"
         android:background="#FFC000"
-        android:onClick="playSpeech"
-        android:id="@+id/please"/>
-</RelativeLayout>
+        android:onClick="switchToATopic"
+        android:id="@+id/work"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/daily"
+        android:tag="@string/daily"
+        android:textSize="45sp"
+        android:background="#FFC000"
+        android:onClick="switchToATopic"
+        android:id="@+id/daily"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/aboutMe"
+        android:tag="@string/aboutMe"
+        android:textSize="45sp"
+        android:background="#FFC000"
+        android:onClick="switchToATopic"
+        android:id="@+id/aboutMe"/>
+    </LinearLayout>
+</ScrollView>

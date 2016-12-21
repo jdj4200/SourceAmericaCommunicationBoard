@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#002060"
-    android:orientation="horizontal"
-    android:weightSum="1">
+    android:fillViewport="true"
+    android:scrollbars="none" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
@@ -18,9 +23,9 @@
         android:weightSum="1">
 
         <Button
-            android:layout_width="175dp"
-            android:layout_height="150dp"
-            android:layout_margin="10dp"
+            android:layout_width="175sp"
+            android:layout_height="150sp"
+            android:layout_margin="10sp"
             android:text="@string/button_yes"
             android:tag="@string/button_yes"
             android:textSize="80sp"
@@ -29,30 +34,26 @@
             android:onClick="playSpeech"/>
 
         <Button
-        android:layout_width="175dp"
-        android:layout_height="150dp"
-        android:layout_margin="10dp"
+        android:layout_width="175sp"
+        android:layout_height="150sp"
+        android:layout_margin="10sp"
         android:text="@string/button_no"
         android:tag="@string/button_no"
         android:textSize="80sp"
         android:textColor="#FFFFFF"
         android:id="@+id/no"
         android:background="#FF0000"
-        android:layout_toRightOf="@id/yes"
         android:onClick="playSpeech" />
     </LinearLayout>
     <Button
         android:layout_width="wrap_content"
-        android:layout_alignLeft="@id/yesNo"
-        android:layout_alignRight="@id/yesNo"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_below="@id/yesNo"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginBottom="20sp"
         android:background="#FFFF00"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
         android:text="@string/comExp"
         android:textSize="40sp"
         android:onClick="switchToCommonExpressions"
@@ -61,13 +62,12 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="10sp"
         android:background="#00B0D0"
         android:text="@string/topics"
         android:textSize="60sp"
-        android:layout_below="@+id/comExp"
-        android:layout_alignLeft="@id/comExp"
-        android:layout_alignRight="@id/comExp"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/button"
         android:onClick="switchToTopics"/>
-</RelativeLayout>
+    </LinearLayout>
+</ScrollView>
