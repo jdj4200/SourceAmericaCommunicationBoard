@@ -1,103 +1,162 @@
 package com.example.phsworkinnovations.communicationboard;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.HashMap;
-import java.util.Locale;
-
 public class SpecificTopicActivity extends AppCompatActivity {
-    private TextToSpeech speech;
     private SharedPreferences sharedPrefs;
-    private String topic;
+    private SpeechOnClickListener listener;
+    private LinearLayout buttonList;
+    private LinearLayout.LayoutParams layout;
+    private RelativeLayout.LayoutParams toTheRight;
+    private Button addExp;
+    private boolean isInEditMode;
 
     @Override
-    @TargetApi((21))
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specific_topic);
+        listener = new SpeechOnClickListener(getApplicationContext());
         Intent intent = getIntent();
         TextView title = (TextView) findViewById(R.id.title);
         title.setText(intent.getStringExtra(TopicsActivity.NEXT_TOPIC));
-        topic = (String)title.getText();
-        initializeTopics();
-        sharedPrefs = this.getSharedPreferences("com.example.phsworkinnovations.communicationboard." + topic.replace(' ','_'),Context.MODE_PRIVATE);
-        readAllButtons();
-        speech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+        String topic = (String) title.getText();
+        layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        int sp10 = spToPixel(10);
+        layout.setMargins(sp10, sp10, sp10, sp10);
+        toTheRight = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        toTheRight.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        toTheRight.addRule(RelativeLayout.CENTER_VERTICAL);
+        buttonList = (LinearLayout) findViewById(R.id.list);
+        addExp = (Button) findViewById(R.id.addExpression);
+        sharedPrefs = this.getSharedPreferences("com.example.phsworkinnovations.communicationboard." + topic.replace(' ', '_'), Context.MODE_PRIVATE);
+        sharedPrefs.edit().clear().apply();
+        int i;
+        for (i = 0; i < sharedPrefs.getInt("Size", 0); i++) {
+            makeButton(sharedPrefs.getString(String.valueOf(i),""));
+        }
+        sharedPrefs.edit().putInt("Size", i).apply();
+    }
+
+    private int spToPixel(int sp){
+        return (int) (sp * getApplicationContext().getResources().getDisplayMetrics().scaledDensity);
+    }
+
+    private ViewGroup makeButton(String text) {
+        RelativeLayout panel = new RelativeLayout(getApplicationContext());
+        panel.setGravity(Gravity.CENTER_HORIZONTAL);
+        Button button = new Button(getApplicationContext());
+        button.setText(text);
+        button.setTextSize(40);
+        button.setOnClickListener(listener);
+        button.setBackgroundResource(R.color.white);
+        button.setPadding(0, 0, 0, 0);
+        panel.addView(button);
+        button.setGravity(Gravity.CENTER_HORIZONTAL);
+        EditText edit = new EditText(getApplicationContext());
+        edit.setTextSize(40);
+        edit.setHint("Expression");
+        edit.setBackgroundResource(R.color.white);
+        edit.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        edit.setInputType(InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE);
+        edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onInit(int status) {
-                if (status != TextToSpeech.ERROR) {
-                    speech.setLanguage(Locale.US);
-                    //speech.setPitch(0);
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_DONE){
+                    hideSoftKeyboard();
+                    return true;
                 }
+                return false;
             }
         });
-        //speech.getVoice()
-    }
-    @TargetApi((21))//Plays speech for all speech buttons using their tags
-    public void playSpeech(View view){
-        if (!speech.isSpeaking())
-            speech.speak((String) view.getTag(),TextToSpeech.QUEUE_FLUSH, null, null);
+        edit.setVisibility(View.GONE);
+        panel.addView(edit);
+        Button delete = new Button(getApplicationContext());
+        delete.setTextSize(40);
+        delete.setText("X");
+        delete.setBackgroundResource(R.color.white);
+        delete.setPadding(0,0,0,0);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteButton((ViewGroup) view.getParent());
+            }
+        });
+        delete.setVisibility(View.GONE);
+        panel.addView(delete, toTheRight);
+        buttonList.addView(panel,layout);
+        return panel;
     }
 
-
-    private void writeToButton(int id, String text){
-        Button button = (Button) findViewById(id);
-        button.setText(text);
-        button.setTag(text);
-        sharedPrefs.edit().putString(String.valueOf(id), text).apply();
-    }
-    private void readFromButton(int id){
-        Button button = (Button) findViewById(Integer.valueOf(id));
-        button.setText(sharedPrefs.getString(String.valueOf(id), "Failed"));
-        button.setTag(sharedPrefs.getString(String.valueOf(id), "Failed"));
-
-        if (!button.getText().equals("Failed")){
-            button.setVisibility(View.VISIBLE);
-        }else{
-            button.setVisibility(View.GONE);
+    private void hideSoftKeyboard() {
+        if (getCurrentFocus() != null){
+            InputMethodManager inputMethodManager = (InputMethodManager)this.getSystemService(MainActivity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
         }
     }
-
-    private void readAllButtons(){
-        readFromButton(R.id.button0);
-        readFromButton(R.id.button1);
-        readFromButton(R.id.button2);
-        readFromButton(R.id.button3);
-        readFromButton(R.id.button4);
-        readFromButton(R.id.button5);
-        readFromButton(R.id.button6);
-        readFromButton(R.id.button7);
-        readFromButton(R.id.button8);
-        readFromButton(R.id.button9);
+    private void deleteButton(ViewGroup panel){
+        buttonList.removeView((View)panel.getParent());
+        int size = sharedPrefs.getInt("Size", 1);
+        sharedPrefs.edit().putInt("Size", size - 1).apply();
     }
-    private void initializeTopics(){
-        if (topic.equals("Workplace")){
-            sharedPrefs = getSharedPreferences("com.example.phsworkinnovations.communicationboard.Workplace", Context.MODE_PRIVATE);
-            writeToButton(R.id.button0, "What do you need me to do?");
-            writeToButton(R.id.button1, "Could you explain?");
-            writeToButton(R.id.button2, "Is this right?");
-            writeToButton(R.id.button3, "For how long?");
-            writeToButton(R.id.button4, "Where?");
-        }else if (topic.equals("Daily Life")){
-            sharedPrefs = getSharedPreferences("com.example.phsworkinnovations.communicationboard.Daily_Life", Context.MODE_PRIVATE);
-            writeToButton(R.id.button0, "What's your name?");
-            writeToButton(R.id.button1, "Pleased to meet you");
-        }else if (topic.equals("About Me")){
-            sharedPrefs = getSharedPreferences("com.example.phsworkinnovations.communicationboard.About_Me", Context.MODE_PRIVATE);
-            writeToButton(R.id.button0, "My name is Michael");
+    public void addAnExpression(View view){ //for adding buttons
+        ViewGroup panel = makeButton("");
+        panel.getChildAt(0).setVisibility(View.GONE);
+        panel.getChildAt(1).setVisibility(View.VISIBLE);
+        panel.getChildAt(2).setVisibility(View.VISIBLE);
+        int size = sharedPrefs.getInt("Size", 0);
+        sharedPrefs.edit().putInt("Size", size + 1).apply();
+    }
+    public void switchEditMode(View view) { //for adding, deleting, and editing buttons
+        int i;
+        ViewGroup panel;
+        if (!isInEditMode) { //To edit
+            ((Button) findViewById(R.id.switchEdit)).setText(R.string.normalMode);
+            for (i = 0; i <  sharedPrefs.getInt("Size", 0); i++) {
+                panel = (ViewGroup) buttonList.getChildAt(i);
+                panel.getChildAt(0).setVisibility(View.GONE);
+                panel.getChildAt(1).setVisibility(View.VISIBLE);
+                panel.getChildAt(2).setVisibility(View.VISIBLE);
+            }
+            addExp.setVisibility(View.VISIBLE);
+        } else { //To stop editing
+            ((Button) findViewById(R.id.switchEdit)).setText(R.string.editMode);
+            hideSoftKeyboard();
+            for (i = 0; i < sharedPrefs.getInt("Size", 0); i++) {
+                panel = (ViewGroup) buttonList.getChildAt(i);
+                EditText edit = (EditText) panel.getChildAt(1);
+                if (edit.getText().toString().equals("")) {
+                    deleteButton(panel);
+                    i--;
+                } else {
+                    Button button = ((Button) panel.getChildAt(0));
+                    button.setText(edit.getText().toString());
+                    panel.getChildAt(0).setVisibility(View.VISIBLE);
+                    edit.setVisibility(View.GONE);
+                    panel.getChildAt(2).setVisibility(View.GONE);
+                    sharedPrefs.edit().putString(String.valueOf(i), button.getText().toString()).apply();
+                }
+            }
+            sharedPrefs.edit().putInt("Size", i).apply();
+            addExp.setVisibility(View.GONE);
         }
+        isInEditMode = !isInEditMode;
     }
 
-    public void addAnExpression(View view){
-
-    }
 }

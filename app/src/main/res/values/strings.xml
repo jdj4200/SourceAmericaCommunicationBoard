@@ -5,13 +5,9 @@
     <string name="button_no">No</string>
     <string name="comExp">Common Expressions</string>
     <string name="topics">Topics</string>
-    <string name="please">Please</string>
-    <string name="thanks">Thank You</string>
-    <string name="hello">Hello</string>
-    <string name="goodbye">Goodbye</string>
-    <string name="repeatThat">Can you repeat that?</string>
+    <string name="editMode">Editing Mode</string>
+    <string name="normalMode">Speech Mode</string>
+    <string name="topicMode">Topic Mode</string>
+    <string name="addButton">+</string>
     <string name="addExp">Add an Expression</string>
-    <string name="work">Workplace</string>
-    <string name="daily">Daily Life</string>
-    <string name="aboutMe">About Me</string>
 </resources>

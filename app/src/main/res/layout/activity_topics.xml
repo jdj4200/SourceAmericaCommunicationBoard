@@ -13,48 +13,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-    <TextView
-        android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/topics"
+            android:layout_gravity="center_horizontal"
+            android:textSize="45sp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:id="@+id/title"/>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/topics"
-        android:layout_gravity="center_horizontal"
-        android:textSize="45sp"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:id="@+id/title"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10sp"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/work"
-        android:tag="@string/work"
-        android:textSize="45sp"
-        android:background="#FFC000"
-        android:onClick="switchToATopic"
-        android:id="@+id/work"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10sp"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/daily"
-        android:tag="@string/daily"
-        android:textSize="45sp"
-        android:background="#FFC000"
-        android:onClick="switchToATopic"
-        android:id="@+id/daily"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10sp"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/aboutMe"
-        android:tag="@string/aboutMe"
-        android:textSize="45sp"
-        android:background="#FFC000"
-        android:onClick="switchToATopic"
-        android:id="@+id/aboutMe"/>
+        android:orientation="vertical"
+        android:id="@+id/list">
+    </LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/addButton"
+            android:layout_gravity="center_horizontal"
+            android:textSize="40sp"
+            android:layout_margin="10sp"
+            android:background="#FFC000"
+            android:visibility="gone"
+            android:onClick="addATopic"
+            android:id="@+id/addTopic"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/editMode"
+            android:layout_gravity="center_horizontal"
+            android:textSize="40sp"
+            android:layout_margin="10sp"
+            android:background="#FFC000"
+            android:onClick="switchEditMode"
+            android:id="@+id/switchEdit"/>
     </LinearLayout>
 </ScrollView>

@@ -23,8 +23,8 @@
         android:weightSum="1">
 
         <Button
-            android:layout_width="175sp"
-            android:layout_height="150sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="10sp"
             android:text="@string/button_yes"
             android:tag="@string/button_yes"
@@ -34,8 +34,8 @@
             android:onClick="playSpeech"/>
 
         <Button
-        android:layout_width="175sp"
-        android:layout_height="150sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="10sp"
         android:text="@string/button_no"
         android:tag="@string/button_no"
